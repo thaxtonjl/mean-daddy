@@ -1,8 +1,26 @@
-<html>
+<!doctype html>
+<html lang="en" ng-app="meanDaddyApp">
     <head>
+        <meta charset="utf-8">
         <title>mean-daddy</title>
+        <script src="bower-components/angular/angular.js"></script>
+        <script src="mean-daddy-app.js"></script>
     </head>
-    <body>
+    <body ng-controller="MeanDaddyCtrl as meanDaddy">
         <h1>mean-daddy</h1>
+        <table>
+            <tbody>
+                <tr ng-repeat="account in meanDaddy.accounts">
+                    <td>{{account.name}}</td>
+                    <td>{{account.amount}}</td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+        </table>
     </body>
 </html>
