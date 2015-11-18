@@ -1,11 +1,13 @@
 (function () {
     'use strict';
 
+    var _ = require('lodash');
     var MongoClient = require('mongodb').MongoClient;
 
     exports.URL = 'mongodb://localhost:27017/mean-daddy';
     exports.getCollection = getCollection;
     exports.getDB = getDB;
+    exports.primeDB = primeDB;
 
     function getCollection(name) {
         return exports
@@ -32,6 +34,31 @@
                 }
             });
         });
+    }
+
+    function primeDB() {
+
+        return exports
+            .getDB()
+            .then(dropDatabase)
+            .then(addCollections);
+
+        function addCollections(db) {
+            var collections = require('./primer-data');
+            var promises = _.map(collections, function (collection, name) {
+                return db
+                    .collection(name)
+                    .insertMany(collection);
+            });
+            return Promise.all(promises);
+        }
+
+        function dropDatabase(db) {
+            return db
+                .dropDatabase()
+                .then(_.constant(db));
+        }
+
     }
 
 }());
