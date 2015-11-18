@@ -87,7 +87,9 @@
     "globals": {
         "angular":      false,
         "__dirname":    false,
+        "exports":      true,
         "process":      false,
+        "Promise":      false,
         "require":      false
     }
 }
