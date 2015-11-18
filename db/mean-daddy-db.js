@@ -2,9 +2,9 @@
     'use strict';
 
     var _ = require('lodash');
+    var config = require('../config');
     var MongoClient = require('mongodb').MongoClient;
 
-    exports.URL = 'mongodb://localhost:27017/mean-daddy';
     exports.getCollection = getCollection;
     exports.getDB = getDB;
     exports.primeDB = primeDB;
@@ -26,7 +26,7 @@
 
     function getDB() {
         return new Promise(function (resolve, reject) {
-            MongoClient.connect(exports.URL, function(err, db) {
+            MongoClient.connect(config.DB_URL, function(err, db) {
                 if (err) {
                     reject(err);
                 } else {
