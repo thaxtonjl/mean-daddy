@@ -1,21 +1,26 @@
-angular
-    .module('meanDaddyApp', [])
-    .controller('MeanDaddyCtrl', MeanDaddyCtrl);
+(function () {
+    'use strict';
 
-function MeanDaddyCtrl($http) {
+    angular
+        .module('meanDaddyApp', [])
+        .controller('MeanDaddyCtrl', MeanDaddyCtrl);
 
-    var vm = this;
+    function MeanDaddyCtrl($http) {
 
-    vm.accounts = [];
+        var vm = this;
 
-    init();
+        vm.accounts = [];
 
-    function init() {
-        $http
-            .get('/api/accounts')
-            .then(function (response) {
-                vm.accounts = response && response.data;
-            });
+        init();
+
+        function init() {
+            $http
+                .get('/api/accounts')
+                .then(function (response) {
+                    vm.accounts = response && response.data;
+                });
+        }
+
     }
 
-}
+}());
