@@ -2,11 +2,107 @@
   "accounts": [
     {
       "name": "Rent",
-      "balance": 950
+      "balance": 0,
+      "dueAmount": 0,
+      "dueDate": null,
+      "overDueAmount": 0,
+      "priority": 1
     },
     {
       "name": "Electricity",
-      "balance": 88
+      "balance": 0,
+      "dueAmount": 0,
+      "dueDate": null,
+      "overDueAmount": 0,
+      "priority": 1
+    },
+    {
+      "name": "Water",
+      "balance": 0,
+      "dueAmount": 0,
+      "dueDate": null,
+      "overDueAmount": 0,
+      "priority": 1
+    },
+    {
+      "name": "Natural Gas",
+      "balance": 148.06,
+      "dueAmount": 148.06,
+      "dueDate": "2015-11-29",
+      "overDueAmount": 0,
+      "priority": 2
+    },
+    {
+      "name": "Sanitation",
+      "balance": 0,
+      "dueAmount": 0,
+      "dueDate": null,
+      "overDueAmount": 0,
+      "priority": 2
+    },
+    {
+      "name": "USAA",
+      "balance": 0,
+      "dueAmount": 0,
+      "dueDate": null,
+      "overDueAmount": 0,
+      "priority": 2
+    },
+    {
+      "name": "Primerica",
+      "balance": 0,
+      "dueAmount": 0,
+      "dueDate": null,
+      "overDueAmount": 0,
+      "priority": 2
+    },
+    {
+      "name": "Verizon Wireless",
+      "balance": 187.61,
+      "dueAmount": 187.61,
+      "dueDate": "2015-11-11",
+      "overDueAmount": 187.61,
+      "priority": 2
+    },
+    {
+      "name": "AAA",
+      "balance": 179.5,
+      "dueAmount": 179.5,
+      "dueDate": "2015-10-31",
+      "overDueAmount": 179.5,
+      "priority": 3
+    },
+    {
+      "name": "Premier Credit",
+      "balance": 750,
+      "dueAmount": 0,
+      "dueDate": null,
+      "overDueAmount": 0,
+      "priority": 3
+    },
+    {
+      "name": "DropBox",
+      "balance": 0,
+      "dueAmount": 0,
+      "dueDate": null,
+      "overDueAmount": 0,
+      "priority": 3
+    },
+    {
+      "name": "Netflix",
+      "balance": 0,
+      "dueAmount": 0,
+      "dueDate": null,
+      "overDueAmount": 0,
+      "priority": 4
+    },
+    {
+      "name": "Ballet",
+      "balance": 0,
+      "dueAmount": 0,
+      "dueDate": null,
+      "overDueAmount": 0,
+      "priority": 4
     }
   ]
 }

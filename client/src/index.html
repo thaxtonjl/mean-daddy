@@ -3,24 +3,60 @@
     <head>
         <meta charset="utf-8">
         <title>mean-daddy</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bower-components/bootstrap/dist/css/bootstrap.css" />
+        <script src="bower-components/lodash/lodash.js"></script>
         <script src="bower-components/angular/angular.js"></script>
         <script src="mean-daddy-app.js"></script>
     </head>
     <body ng-controller="MeanDaddyCtrl as meanDaddy">
-        <h1>mean-daddy</h1>
-        <table>
-            <tbody>
-                <tr ng-repeat="account in meanDaddy.accounts">
-                    <td>{{account.name}}</td>
-                    <td>{{account.balance}}</td>
-                </tr>
-            </tbody>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Balance</th>
-                </tr>
-            </thead>
-        </table>
+        <div class="container-fluid">
+            <div class="page-header">
+                <h1>mean-daddy</h1>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Accounts</h2>
+                        </div>
+                        <table class="table table-striped table-condensed">
+                            <tbody>
+                                <tr
+                                        ng-repeat="account in meanDaddy.accounts"
+                                        ng-class="{'danger': account.overDueAmount}">
+                                    <td>{{account.priority}}</td>
+                                    <td>{{account.name}}</td>
+                                    <td>{{account.balance | nullCurrency}}</td>
+                                    <td>{{account.dueAmount | nullCurrency}}</td>
+                                    <td>{{account.dueDate | dueDate}}</td>
+                                    <td>{{account.overDueAmount | nullCurrency}}</td>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th><abbr title="Priority">P</abbr></th>
+                                    <th>Name</th>
+                                    <th>Balance</th>
+                                    <th>Due</th>
+                                    <th>Due Date (days)</th>
+                                    <th>Overdue</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th>Totals</th>
+                                    <th>{{meanDaddy.totals.balance | nullCurrency}}</th>
+                                    <th>{{meanDaddy.totals.dueAmount | nullCurrency}}</th>
+                                    <th></th>
+                                    <th>{{meanDaddy.totals.overDueAmount | nullCurrency}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

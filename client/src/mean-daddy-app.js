@@ -3,24 +3,73 @@
 
     angular
         .module('meanDaddyApp', [])
+        .filter('nullCurrency', nullCurrency)
+        .filter('dueDate', dueDate)
         .controller('MeanDaddyCtrl', MeanDaddyCtrl);
 
-    function MeanDaddyCtrl($http) {
+    function dueDate($filter) {
+        return function(input) {
+            var due = '';
+            var day = 24 * 60 * 60 * 1000;
+            var days, now;
+            if (input) {
+                due = new Date(input);
+                due = new Date(due.getUTCFullYear(), due.getUTCMonth(), due.getUTCDate());
+                now = new Date();
+                now = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+                days = Math.round((due - now) / day);
+                due = $filter('date')(due, 'MMM d') + ' (' + days + ')';
+            }
+            return due;
+        };
+    }
+
+    function MeanDaddyCtrl($http, $scope) {
 
         var vm = this;
 
         vm.accounts = [];
+        vm.totals = {};
 
         init();
 
         function init() {
+
             $http
                 .get('/api/accounts')
                 .then(function (response) {
-                    vm.accounts = response && response.data;
+                    var list = response && response.data || [];
+                    vm.accounts = _.sortByAll(list, ['priority', 'name']);
                 });
+            $scope.$watch(getAccountsArray, setAccountsTotals);
+
         }
 
+        function getAccountsArray() {
+            return vm.accounts;
+        }
+
+        function setAccountsTotals(accountsArray, oldAccountsArray) {
+            if (accountsArray && accountsArray !== oldAccountsArray) {
+                vm.totals = {
+                    balance: 0,
+                    dueAmount: 0,
+                    overDueAmount: 0
+                };
+                _.each(accountsArray, function (account) {
+                    vm.totals.balance += account.balance;
+                    vm.totals.dueAmount += account.dueAmount;
+                    vm.totals.overDueAmount += account.overDueAmount;
+                });
+            }
+        }
+
+    }
+
+    function nullCurrency($filter) {
+        return function(input) {
+            return input ? $filter('currency')(input) : '';
+        };
     }
 
 }());
