@@ -28,8 +28,12 @@
 
         var vm = this;
 
-        vm.accounts = [];
-        vm.totals = {};
+        // Properties
+        vm.accounts         = [];
+        vm.totals           = {};
+
+        // Methods
+        vm.backupDatabse    = backupDatabse;
 
         init();
 
@@ -42,6 +46,25 @@
                     vm.accounts = _.sortByAll(list, ['priority', 'name']);
                 });
             $scope.$watch(getAccountsArray, setAccountsTotals);
+
+        }
+
+        function backupDatabse() {
+
+            var data = {
+                name: 'backupDatabase'
+            };
+            $http
+                .post('/api/actions', data)
+                .then(success, failure);
+
+            function failure() {
+                alert('Failure');
+            }
+
+            function success() {
+                alert('Success');
+            }
 
         }
 

@@ -7,6 +7,8 @@
 
     exports.getCollection = getCollection;
     exports.getDB = getDB;
+    exports.getDBDump = getDBDump;
+    exports.getDBDump = getDBDump;
     exports.primeDB = primeDB;
 
     function getCollection(name) {
@@ -34,6 +36,40 @@
                 }
             });
         });
+    }
+
+    function getDBDump() {
+        return exports
+            .getDB()
+            .then(function (db) {
+                var dump = {};
+                return db
+                    .listCollections()
+                    .toArray()
+                    .then(function (collectionList) {
+                        var promises = _.chain(collectionList)
+                            .map(function (col) {
+                                return col.name;
+                            })
+                            .filter(function (collectionName) {
+                                return collectionName.substring(0, 7) !== 'system.';
+                            })
+                            .map(function (collectionName) {
+                                return db
+                                    .collection(collectionName)
+                                    .find()
+                                    .toArray()
+                                    .then(function (collection) {
+                                        dump[collectionName] = collection;
+                                    });
+                            })
+                            .value();
+                        return Promise.all(promises);
+                    })
+                    .then(function () {
+                        return dump;
+                    });
+            });
     }
 
     function primeDB() {
