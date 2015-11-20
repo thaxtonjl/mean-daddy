@@ -24,7 +24,7 @@
         };
     }
 
-    function MeanDaddyCtrl($http, $scope) {
+    function MeanDaddyCtrl(apiSvc, $scope) {
 
         var vm = this;
 
@@ -38,34 +38,20 @@
         init();
 
         function init() {
-
-            $http
-                .get('/api/accounts')
-                .then(function (response) {
-                    var list = response && response.data || [];
-                    vm.accounts = _.sortByAll(list, ['priority', 'name']);
+            apiSvc
+                .fetchCollection('accounts', ['priority', 'name'])
+                .then(function (accounts) {
+                    vm.accounts = accounts;
                 });
             $scope.$watch(getAccountsArray, setAccountsTotals);
-
         }
 
         function backupDatabse() {
-
-            var data = {
-                name: 'backupDatabase'
-            };
-            $http
-                .post('/api/actions', data)
+            var failure = _.partial(alert, 'Failure');
+            var success = _.partial(alert, 'Success');
+            apiSvc
+                .doAction('backupDatabase')
                 .then(success, failure);
-
-            function failure() {
-                alert('Failure');
-            }
-
-            function success() {
-                alert('Success');
-            }
-
         }
 
         function getAccountsArray() {
