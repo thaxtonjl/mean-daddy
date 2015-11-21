@@ -30,7 +30,11 @@
 
         function addNewAccount() {
             editSvc
-                .create();
+                .create()
+                .then(function (newAccountObject) {
+                    vm.accounts.push(newAccountObject);
+                    vm.accounts = _.sortByAll(vm.accounts, ['priority', 'name']);
+                });
         }
 
         function backupDatabse() {
