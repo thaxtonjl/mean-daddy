@@ -10,67 +10,21 @@
         <script src="bower-components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="mean-daddy-app.js"></script>
         <script src="filters.js"></script>
-        <script src="controllers/mean-daddy-ctrl.js"></script>
+        <script src="directives/account-list-panel.js"></script>
+        <script src="directives/account-list-panel-ctrl.js"></script>
         <script src="services/api-svc.js"></script>
         <script src="services/edit-svc.js"></script>
         <script src="services/edit-svc-modal-ctrl.js"></script>
     </head>
-    <body ng-controller="MeanDaddyCtrl as meanDaddy">
+    <body>
         <div class="container-fluid">
             <div class="page-header">
                 <h1>mean-daddy</h1>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-lg-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="btn-group pull-right" role="group">
-                                <button
-                                        ng-click="meanDaddy.addNewAccount()"
-                                        type="button"
-                                        class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                                <button
-                                        ng-click="meanDaddy.backupDatabse()"
-                                        type="button"
-                                        class="btn btn-default btn-xs"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button>
-                            </div>
-                            <h2 class="panel-title">Accounts</h2>
-                        </div>
-                        <table class="table table-striped table-condensed">
-                            <tbody>
-                                <tr
-                                        ng-repeat="account in meanDaddy.accounts"
-                                        ng-class="{'danger': account.overDueAmount}">
-                                    <td>{{account.priority}}</td>
-                                    <td>{{account.name}}</td>
-                                    <td>{{account.balance | nullCurrency}}</td>
-                                    <td>{{account.dueAmount | nullCurrency}}</td>
-                                    <td>{{account.dueDate | dueDate}}</td>
-                                    <td>{{account.overDueAmount | nullCurrency}}</td>
-                                </tr>
-                            </tbody>
-                            <thead>
-                                <tr>
-                                    <th><abbr title="Priority">P</abbr></th>
-                                    <th>Name</th>
-                                    <th>Balance</th>
-                                    <th>Due</th>
-                                    <th>Due Date (days)</th>
-                                    <th>Overdue</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>Totals</th>
-                                    <th>{{meanDaddy.totals.balance | nullCurrency}}</th>
-                                    <th>{{meanDaddy.totals.dueAmount | nullCurrency}}</th>
-                                    <th></th>
-                                    <th>{{meanDaddy.totals.overDueAmount | nullCurrency}}</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                <div
+                        account-list-panel
+                        class="col-xs-12 col-lg-8">
                 </div>
             </div>
         </div>

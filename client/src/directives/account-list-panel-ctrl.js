@@ -3,9 +3,9 @@
 
     angular
         .module('meanDaddyApp')
-        .controller('MeanDaddyCtrl', MeanDaddyCtrl);
+        .controller('AccountListPanelCtrl', AccountListPanelCtrl);
 
-    function MeanDaddyCtrl(apiSvc, editSvc, $scope) {
+    function AccountListPanelCtrl(apiSvc, editSvc, $scope) {
 
         var vm = this;
 
