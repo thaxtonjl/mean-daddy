@@ -7,10 +7,12 @@
         <link rel="stylesheet" href="bower-components/bootstrap/dist/css/bootstrap.css" />
         <script src="bower-components/lodash/lodash.js"></script>
         <script src="bower-components/angular/angular.js"></script>
+        <script src="bower-components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="mean-daddy-app.js"></script>
         <script src="filters.js"></script>
         <script src="controllers/mean-daddy-ctrl.js"></script>
         <script src="services/api-svc.js"></script>
+        <script src="services/edit-svc.js"></script>
     </head>
     <body ng-controller="MeanDaddyCtrl as meanDaddy">
         <div class="container-fluid">
@@ -22,6 +24,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="btn-group pull-right" role="group">
+                                <button
+                                        ng-click="meanDaddy.addNewAccount()"
+                                        type="button"
+                                        class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                                 <button
                                         ng-click="meanDaddy.backupDatabse()"
                                         type="button"

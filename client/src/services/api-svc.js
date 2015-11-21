@@ -10,9 +10,24 @@
         var API_BASE = '/api';
 
         return {
+            addToCollection: addToCollection,
             doAction: doAction,
             fetchCollection: fetchCollection
         };
+
+        function addToCollection(collectionName, newItem) {
+            if (!collectionName || typeof collectionName !== 'string') {
+                return $q.reject('Invalid collectionName: ' + JSON.stringify(collectionName));
+            }
+            if (!newItem || typeof newItem !== 'object') {
+                return $q.reject('Invalid newItem: ' + JSON.stringify(newItem));
+            }
+            return $http
+                .post(API_BASE + '/' + collectionName, newItem)
+                .then(function (response) {
+                    return response && response.data;
+                });
+        }
 
         function doAction(actionName) {
             var promise;

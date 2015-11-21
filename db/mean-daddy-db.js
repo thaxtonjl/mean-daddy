@@ -9,6 +9,7 @@
     exports.getDB = getDB;
     exports.getDBDump = getDBDump;
     exports.getDBDump = getDBDump;
+    exports.insertOne = insertOne;
     exports.primeDB = primeDB;
 
     function getCollection(name) {
@@ -67,8 +68,38 @@
                         return Promise.all(promises);
                     })
                     .then(function () {
+                        db.close();
                         return dump;
                     });
+            });
+    }
+
+    function insertOne(collectionName, newItem) {
+        var rejectionReason;
+        if (!collectionName || typeof collectionName !== 'string') {
+            rejectionReason = 'Invalid collectionName: ' + JSON.stringify(collectionName);
+        } else if (!newItem || typeof newItem !== 'object') {
+            rejectionReason = 'Invalid newItem: ' + JSON.stringify(newItem);
+        }
+        if (rejectionReason) {
+            return new Promise(function (resolve, reject) {
+                reject(rejectionReason);
+            });
+        }
+        return exports
+            .getDB()
+            .then(function (db) {
+                return new Promise(function (resolve, reject) {
+                    db
+                        .collection(collectionName)
+                        .insertOne(newItem, function (err, result) {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(_.get(result, 'ops[0]'));
+                            }
+                        });
+                });
             });
     }
 
@@ -86,7 +117,12 @@
                     .collection(name)
                     .insertMany(collection);
             });
-            return Promise.all(promises);
+            return Promise
+                .all(promises)
+                .then(function (result) {
+                    db.close();
+                    return result;
+                });
         }
 
         function dropDatabase(db) {

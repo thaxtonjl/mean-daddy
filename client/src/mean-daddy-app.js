@@ -3,6 +3,7 @@
 
     angular
         .module('meanDaddyApp', [
+            'ui.bootstrap'
         ]);
 
 }());

@@ -5,7 +5,7 @@
         .module('meanDaddyApp')
         .controller('MeanDaddyCtrl', MeanDaddyCtrl);
 
-    function MeanDaddyCtrl(apiSvc, $scope) {
+    function MeanDaddyCtrl(apiSvc, editSvc, $scope) {
 
         var vm = this;
 
@@ -14,6 +14,7 @@
         vm.totals           = {};
 
         // Methods
+        vm.addNewAccount    = addNewAccount;
         vm.backupDatabse    = backupDatabse;
 
         init();
@@ -25,6 +26,11 @@
                     vm.accounts = accounts;
                 });
             $scope.$watch(getAccountsArray, setAccountsTotals);
+        }
+
+        function addNewAccount() {
+            editSvc
+                .create();
         }
 
         function backupDatabse() {
@@ -47,9 +53,11 @@
                     overDueAmount: 0
                 };
                 _.each(accountsArray, function (account) {
-                    vm.totals.balance += account.balance;
-                    vm.totals.dueAmount += account.dueAmount;
-                    vm.totals.overDueAmount += account.overDueAmount;
+                    if (account) {
+                        vm.totals.balance += account.balance || 0;
+                        vm.totals.dueAmount += account.dueAmount || 0;
+                        vm.totals.overDueAmount += account.overDueAmount || 0;
+                    }
                 });
             }
         }
