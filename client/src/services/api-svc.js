@@ -11,6 +11,7 @@
 
         return {
             addToCollection: addToCollection,
+            editInCollection: editInCollection,
             doAction: doAction,
             fetchCollection: fetchCollection
         };
@@ -24,6 +25,23 @@
             }
             return $http
                 .post(API_BASE + '/' + collectionName, newItem)
+                .then(function (response) {
+                    return response && response.data;
+                });
+        }
+
+        function editInCollection(collectionName, changedItem) {
+            if (!collectionName || typeof collectionName !== 'string') {
+                return $q.reject('Invalid collectionName: ' + JSON.stringify(collectionName));
+            }
+            if (!changedItem || typeof changedItem !== 'object') {
+                return $q.reject('Invalid changedItem: ' + JSON.stringify(changedItem));
+            }
+            if (!changedItem._id || typeof changedItem._id !== 'string') {
+                return $q.reject('Invalid changedItem._id: ' + JSON.stringify(changedItem._id));
+            }
+            return $http
+                .patch(API_BASE + '/' + collectionName + '/' + changedItem._id, changedItem)
                 .then(function (response) {
                     return response && response.data;
                 });

@@ -12,11 +12,12 @@
         </div>
         <h2 class="panel-title">Accounts</h2>
     </div>
-    <table class="table table-striped table-condensed">
+    <table class="table table-striped table-condensed table-hover">
         <tbody>
             <tr
                     ng-repeat="account in accountListPanel.accounts"
-                    ng-class="{'danger': account.overDueAmount}">
+                    ng-class="{'danger': account.overDueAmount}"
+                    ng-click="accountListPanel.editAccount(account)">
                 <td>{{account.priority}}</td>
                 <td>{{account.name}}</td>
                 <td>{{account.balance | nullCurrency}}</td>

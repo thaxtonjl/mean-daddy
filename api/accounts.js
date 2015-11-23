@@ -9,11 +9,12 @@
 
     function init(app) {
         app.get(config.REST_BASE + '/accounts', getAccounts);
+        app.patch(config.REST_BASE + '/accounts/:_id', patchAccounts);
         app.post(config.REST_BASE + '/accounts', postAccounts);
     }
 
     function getAccounts(req, res) {
-        console.log('GET:  ' + config.REST_BASE + '/accounts');
+        console.log('GET:   ' + req.originalUrl);
         meanDaddyDB
             .getCollection('accounts')
             .then(function (accounts) {
@@ -21,8 +22,26 @@
             });
     }
 
+    function patchAccounts(req, res) {
+        console.log('PATCH: ' + req.originalUrl);
+        var changedAccount = _.get(req, 'body');
+        delete changedAccount._id;
+        meanDaddyDB
+            .updateOne('accounts', req.params._id, changedAccount)
+            .then(function (account) {
+                res.send(account);
+            })
+            .catch(function (err) {
+                res
+                    .status(500)
+                    .send({
+                        error: err
+                    });
+            });
+    }
+
     function postAccounts(req, res) {
-        console.log('POST: ' + config.REST_BASE + '/accounts');
+        console.log('POST:  ' + req.originalUrl);
         var newAccount = _.get(req, 'body');
         var failReason;
         if (!newAccount) {

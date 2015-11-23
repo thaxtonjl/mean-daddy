@@ -8,15 +8,21 @@
     function editSvc($uibModal) {
 
         return {
-            create: create
+            create: _.partial(edit, null),
+            edit: edit
         };
 
-        function create() {
+        function edit(account) {
             return $uibModal
                 .open({
                     controller: 'EditSvcModalCtrl',
                     controllerAs: 'editSvcModal',
-                    templateUrl: '/services/edit-svc-modal.html'
+                    templateUrl: '/services/edit-svc-modal.html',
+                    resolve: {
+                        originalAccount: function () {
+                            return account;
+                        }
+                    }
                 })
                 .result;
         }

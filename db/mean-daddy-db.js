@@ -5,12 +5,12 @@
     var config = require('../config');
     var MongoClient = require('mongodb').MongoClient;
 
-    exports.getCollection = getCollection;
-    exports.getDB = getDB;
-    exports.getDBDump = getDBDump;
-    exports.getDBDump = getDBDump;
-    exports.insertOne = insertOne;
-    exports.primeDB = primeDB;
+    exports.getCollection   = getCollection;
+    exports.getDB           = getDB;
+    exports.getDBDump       = getDBDump;
+    exports.insertOne       = insertOne;
+    exports.primeDB         = primeDB;
+    exports.updateOne       = updateOne;
 
     function getCollection(name) {
         return exports
@@ -131,6 +131,61 @@
                 .then(_.constant(db));
         }
 
+    }
+
+    function updateOne(collectionName, _id, changedItem) {
+        var rejectionReason;
+        if (!collectionName || typeof collectionName !== 'string') {
+            rejectionReason = 'Invalid collectionName: ' + JSON.stringify(collectionName);
+        } else if (!_id || typeof _id !== 'string') {
+            rejectionReason = 'Invalid _id: ' + JSON.stringify(_id);
+        } else if (!changedItem || typeof changedItem !== 'object') {
+            rejectionReason = 'Invalid changedItem: ' + JSON.stringify(changedItem);
+        } else if (!changedItem.name && typeof changedItem.hasOwnProperty('name')) {
+            rejectionReason = '"name" is required.';
+        }
+        if (rejectionReason) {
+            return new Promise(function (resolve, reject) {
+                reject(rejectionReason);
+            });
+        }
+        return exports
+            .getDB()
+            .then(function (db) {
+                return new Promise(function (resolve, reject) {
+                    var criteria = {
+                        _id: _id
+                    };
+                    var delta = {
+                        $set: changedItem
+                    };
+                    db
+                        .collection(collectionName)
+                        .updateOne(criteria, delta, function (err, result) {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                db
+                                    .collection(collectionName)
+                                    .find(criteria)
+                                    .toArray()
+                                    .then(function (accounts) {
+                                        var account = _.get(accounts, '[0]');
+                                        if (account) {
+                                            resolve(account);
+                                        } else {
+                                            return new Promise(function (resolve, reject) {
+                                                reject('No account retrieved.');
+                                            });
+                                        }
+                                    })
+                                    .catch(function (err) {
+                                        reject(err);
+                                    });
+                            }
+                        });
+                });
+            });
     }
 
 }());
