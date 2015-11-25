@@ -3,18 +3,18 @@
     {
       "_id": "564e2bbf4d88c2ab43f8adb1",
       "name": "Rent",
-      "balance": 0,
-      "dueAmount": 0,
-      "dueDate": null,
+      "balance": 950,
+      "dueAmount": 950,
+      "dueDate": "2015-12-01",
       "overDueAmount": 0,
       "priority": 1
     },
     {
       "_id": "564e2bbf4d88c2ab43f8adb2",
       "name": "Electricity",
-      "balance": 0,
-      "dueAmount": 0,
-      "dueDate": null,
+      "balance": 116.15,
+      "dueAmount": 116.15,
+      "dueDate": "2015-12-14",
       "overDueAmount": 0,
       "priority": 1
     },
@@ -111,9 +111,9 @@
     {
       "_id": "564e2bbf4d88c2ab43f8adbd",
       "name": "Ballet",
-      "balance": 0,
-      "dueAmount": 0,
-      "dueDate": null,
+      "balance": 132,
+      "dueAmount": 132,
+      "dueDate": "2015-12-08",
       "overDueAmount": 0,
       "priority": 4
     }

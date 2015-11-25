@@ -39,6 +39,9 @@
         }
 
         function convertToDateString(date) {
+            if (!date) {
+                return date;
+            }
             var month = date.getUTCMonth() + 1;
             if (month < 10) {
                 month = '0' + month;
