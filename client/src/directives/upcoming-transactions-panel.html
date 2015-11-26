@@ -1,0 +1,61 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Upcoming</h2>
+    </div>
+    <table class="table table-striped table-condensed">
+        <tbody>
+            <tr
+                    ng-repeat-start="payGroup in upcomingTransactionsPanel.payGroups"
+                    ng-class="{
+                        'asset': $first && payGroup.transactions[0].amount > 0,
+                        'paycheck': !$first && payGroup.transactions[0].amount > 0,
+                        'overdue': upcomingTransactionsPanel.isOverdue(payGroup.transactions[0].date)
+                    }">
+                <th
+                        ng-class-odd="'pps-alt'"
+                        rowspan="{{payGroup.transactions.length}}"
+                        class="pay-period-summary">
+                    {{payGroup.subTotal | currency}}<br ng-if="payGroup.days && payGroup.subTotal > 0" />
+                    <span ng-if="payGroup.days && payGroup.subTotal > 0">{{(payGroup.subTotal / payGroup.days | nullCurrency) + '/day'}}</span>
+                </th>
+                <td>{{payGroup.transactions[0].name}}</td>
+                <td>{{(payGroup.transactions[0].amount > 0 ? payGroup.transactions[0].amount : 0) | nullCurrency}}</td>
+                <td>{{(payGroup.transactions[0].amount < 0 ? -payGroup.transactions[0].amount : 0) | nullCurrency}}</td>
+                <td>{{payGroup.transactions[0].date | dueDate}}</td>
+                <td>{{payGroup.transactions[0].date | dueDays}}</td>
+            </tr>
+            <tr
+                    ng-repeat-end
+                    ng-repeat="transaction in payGroup.transactions.slice(1)"
+                    ng-class="{
+                        'asset': $first && transaction.amount > 0,
+                        'paycheck': !$first && transaction.amount > 0,
+                        'overdue': upcomingTransactionsPanel.isOverdue(transaction.date)
+                    }">
+                <td>{{transaction.name}}</td>
+                <td>{{(transaction.amount > 0 ? transaction.amount : 0) | nullCurrency}}</td>
+                <td>{{(transaction.amount < 0 ? -transaction.amount : 0) | nullCurrency}}</td>
+                <td>{{transaction.date | dueDate}}</td>
+                <td>{{transaction.date | dueDays}}</td>
+            </tr>
+            <!--tr class="paycheck">
+                <th class="pay-period-summary"></th>
+                <td>Fusion Alliance</td>
+                <td>$2,259.34</td>
+                <td></td>
+                <td>Dec 15</td>
+                <td>20</td>
+            </tr-->
+        </tbody>
+        <thead>
+            <tr>
+                <th>Sub-totals</th>
+                <th>Name</th>
+                <th>Debit</th>
+                <th>Credit</th>
+                <th>Date</th>
+                <th>Days</th>
+            </tr>
+        </thead>
+    </table>
+</div>

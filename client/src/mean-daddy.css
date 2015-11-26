@@ -1,7 +1,9 @@
 .table-hover tbody td {
     cursor: pointer;
 }
-tr.asset td,
+tr.asset td {
+    background-color: #d9edf7;
+}
 tr.paycheck td {
     background-color: #dff0d8;
 }

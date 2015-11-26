@@ -4,23 +4,45 @@
     angular
         .module('meanDaddyApp')
         .filter('dueDate', dueDate)
+        .filter('dueDays', dueDays)
         .filter('nullCurrency', nullCurrency);
 
     function dueDate($filter) {
         return function(input) {
-            var due = '';
-            var day = 24 * 60 * 60 * 1000;
-            var days, now;
+            var date = '';
+            var due;
             if (input) {
-                due = new Date(input);
-                due = new Date(due.getUTCFullYear(), due.getUTCMonth(), due.getUTCDate());
-                now = new Date();
-                now = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-                days = Math.round((due - now) / day);
-                due = $filter('date')(due, 'MMM d') + ' (' + days + ')';
+                due = getLocalDate(input);
+                date = $filter('date')(due, 'MMM d');
             }
-            return due;
+            return date;
         };
+    }
+
+    function dueDays() {
+        return function(input) {
+            var day = 24 * 60 * 60 * 1000;
+            var days = '';
+            var due, now;
+            if (input) {
+                due = getLocalDate(input);
+                now = getLocalDate();
+                days = Math.round((due - now) / day);
+            }
+            return days;
+        };
+    }
+
+    function getLocalDate(input) {
+        var date;
+        if (input) {
+            date = new Date(input);
+            date = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+        } else {
+            date = new Date();
+            date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        }
+        return date;
     }
 
     function nullCurrency($filter) {
