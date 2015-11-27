@@ -5,7 +5,7 @@
       "name": "Rent",
       "balance": 950,
       "dueAmount": 950,
-      "dueDate": "2015-12-01",
+      "dueDate": "2015-12-01T00:00:00.000Z",
       "overDueAmount": 0,
       "priority": 1
     },
@@ -14,7 +14,7 @@
       "name": "Electricity",
       "balance": 116.15,
       "dueAmount": 116.15,
-      "dueDate": "2015-12-14",
+      "dueDate": "2015-12-14T00:00:00.000Z",
       "overDueAmount": 0,
       "priority": 1
     },
@@ -32,7 +32,7 @@
       "name": "Natural Gas",
       "balance": 148.06,
       "dueAmount": 148.06,
-      "dueDate": "2015-11-29",
+      "dueDate": "2015-11-29T00:00:00.000Z",
       "overDueAmount": 0,
       "priority": 2
     },
@@ -68,7 +68,7 @@
       "name": "Verizon Wireless",
       "balance": 187.61,
       "dueAmount": 187.61,
-      "dueDate": "2015-11-11",
+      "dueDate": "2015-11-11T00:00:00.000Z",
       "overDueAmount": 187.61,
       "priority": 2
     },
@@ -77,7 +77,7 @@
       "name": "AAA",
       "balance": 179.5,
       "dueAmount": 179.5,
-      "dueDate": "2015-10-31",
+      "dueDate": "2015-10-31T00:00:00.000Z",
       "overDueAmount": 179.5,
       "priority": 3
     },
@@ -113,7 +113,7 @@
       "name": "Ballet",
       "balance": 132,
       "dueAmount": 132,
-      "dueDate": "2015-12-08",
+      "dueDate": "2015-12-08T00:00:00.000Z",
       "overDueAmount": 0,
       "priority": 4
     }

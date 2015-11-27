@@ -5,7 +5,7 @@
         .module('meanDaddyApp')
         .controller('UpcomingTransactionsPanelCtrl', UpcomingTransactionsPanelCtrl);
 
-    function UpcomingTransactionsPanelCtrl() {
+    function UpcomingTransactionsPanelCtrl(dateSvc) {
 
         var vm = this;
 
@@ -27,18 +27,6 @@
             });
         }
 
-        function getLocalDate(input) {
-            var date;
-            if (input) {
-                date = new Date(input);
-                date = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
-            } else {
-                date = new Date();
-                date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-            }
-            return date;
-        }
-
         function getPayGroups() {
             return [
                 {
@@ -50,7 +38,7 @@
                         },
                         {
                             name: 'Available Credit',
-                            amount: 179
+                            amount: 178
                         }
                     ]
                 },
@@ -60,17 +48,17 @@
                         //{
                         //    name: 'AAA',
                         //    amount: -179.5,
-                        //    date: '2015-10-31'
+                        //    date: '2015-10-31T00:00:00.000Z'
                         //},
                         {
                             name: 'Verizon Wireless',
                             amount: -187.61,
-                            date: '2015-11-11'
+                            date: '2015-11-11T00:00:00.000Z'
                         },
                         {
                             name: 'Natural Gas',
                             amount: -148.06,
-                            date: '2015-11-29'
+                            date: '2015-11-29T00:00:00.000Z'
                         }
                     ]
                 },
@@ -80,22 +68,22 @@
                         {
                             name: 'Fusion Alliance',
                             amount: 2259.34,
-                            date: '2015-11-30'
+                            date: '2015-11-30T00:00:00.000Z'
                         },
                         {
                             name: 'Rent',
                             amount: -950,
-                            date: '2015-12-01'
+                            date: '2015-12-01T00:00:00.000Z'
                         },
                         {
                             name: 'Ballet/Tap Costumes',
                             amount: -132,
-                            date: '2015-12-08'
+                            date: '2015-12-08T00:00:00.000Z'
                         },
                         {
                             name: 'Electricity',
                             amount: -116.15,
-                            date: '2015-12-14'
+                            date: '2015-12-14T00:00:00.000Z'
                         }
                     ]
                 }
@@ -106,9 +94,8 @@
             if (!input) {
                 return false;
             }
-            var dueDate = getLocalDate(input);
-            var now = getLocalDate();
-            return now > dueDate;
+            var days = dateSvc.daysFromNow(input);
+            return days < 0;
         }
 
     }

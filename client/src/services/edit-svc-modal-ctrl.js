@@ -5,7 +5,7 @@
         .module('meanDaddyApp')
         .controller('EditSvcModalCtrl', EditSvcModalCtrl);
 
-    function EditSvcModalCtrl(apiSvc, originalAccount, $uibModalInstance) {
+    function EditSvcModalCtrl(apiSvc, dateSvc, originalAccount, $uibModalInstance) {
 
         var vm = this;
 
@@ -21,10 +21,8 @@
         init();
 
         function init() {
-            var date;
             if (vm.account.dueDate) {
-                date = new Date(vm.account.dueDate);
-                vm.account.dueDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+                vm.account.dueDate = dateSvc.convertToLocal(vm.account.dueDate);
             }
         }
 
@@ -32,25 +30,17 @@
             var transport = _.merge({}, accountInput);
             transport.balance = parseFloat(transport.balance);
             transport.dueAmount = parseFloat(transport.dueAmount);
-            transport.dueDate = convertToDateString(transport.dueDate);
+            transport.dueDate = convertDateToUTC(transport.dueDate);
             transport.overDueAmount = parseFloat(transport.overDueAmount);
             transport.priority = parseInt(transport.priority, 10);
             return transport;
         }
 
-        function convertToDateString(date) {
+        function convertDateToUTC(date) {
             if (!date) {
-                return date;
+                return null;
             }
-            var month = date.getUTCMonth() + 1;
-            if (month < 10) {
-                month = '0' + month;
-            }
-            var d = date.getUTCDate();
-            if (d < 10) {
-                d = '0' + d;
-            }
-            return date.getUTCFullYear() + '-' + month + '-' + d;
+            return dateSvc.convertToUTC(date);
         }
 
         function submit(account) {

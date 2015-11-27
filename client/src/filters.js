@@ -7,42 +7,24 @@
         .filter('dueDays', dueDays)
         .filter('nullCurrency', nullCurrency);
 
-    function dueDate($filter) {
+    function dueDate() {
         return function(input) {
             var date = '';
-            var due;
             if (input) {
-                due = getLocalDate(input);
-                date = $filter('date')(due, 'MMM d');
+                date = moment(input).utc().format('MMM Do');
             }
             return date;
         };
     }
 
-    function dueDays() {
+    function dueDays(dateSvc) {
         return function(input) {
-            var day = 24 * 60 * 60 * 1000;
-            var days = '';
-            var due, now;
+            var days;
             if (input) {
-                due = getLocalDate(input);
-                now = getLocalDate();
-                days = Math.round((due - now) / day);
+                days = dateSvc.daysFromNow(input);
             }
-            return days;
+            return typeof days === 'number' ? days : '';
         };
-    }
-
-    function getLocalDate(input) {
-        var date;
-        if (input) {
-            date = new Date(input);
-            date = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
-        } else {
-            date = new Date();
-            date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-        }
-        return date;
     }
 
     function nullCurrency($filter) {

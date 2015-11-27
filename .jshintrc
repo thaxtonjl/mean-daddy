@@ -89,6 +89,7 @@
         "angular":      false,
         "__dirname":    false,
         "exports":      true,
+        "moment":       false,
         "process":      false,
         "Promise":      false,
         "require":      false
